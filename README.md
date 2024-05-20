@@ -1,5 +1,8 @@
 # Events Registration App
 
+![event](https://raw.githubusercontent.com/dawmsi/multicontainer-events-app/main/preview-event.png?raw=true)
+![event](https://github.com/dawmsi/multicontainer-events-app/blob/main/preview-events.png?raw=true)
+
 ## Tasks
 
 - [x] Events board page
