@@ -28,7 +28,7 @@
 ### docker-compose
 
 ```bash
-git clone <this repo>
+git clone https://github.com/dawmsi/multicontainer-events-app.git
 ```
 
 ```bash
