@@ -15,6 +15,7 @@ datasource db {
 
 model User {
     id            String         @id @default(uuid())
+    number        Int            @default(autoincrement())
     fullName      String
     email         String         @unique
     dateOfBirth   DateTime       @default(now())
