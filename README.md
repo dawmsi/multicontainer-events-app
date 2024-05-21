@@ -77,3 +77,10 @@ connect to the startup container named api
 - api
 - client
 - nginx
+
+if example api in not running
+restart bu id from `docker ps`
+
+```bash
+docker restart <container-id>
+```
