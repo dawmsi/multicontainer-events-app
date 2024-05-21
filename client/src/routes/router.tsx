@@ -14,18 +14,18 @@ function Router() {
       children: [
         {
           path: "/",
-          element: <HomePage />,
+          element: <HomePage />
         },
         {
           path: "/event/:id",
-          element: <EventPage />,
+          element: <EventPage />
         },
         {
           path: "/register/:id",
-          element: <RegisterPage />,
-        },
-      ],
-    },
+          element: <RegisterPage />
+        }
+      ]
+    }
   ]);
 
   return <RouterProvider router={router} />;

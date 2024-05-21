@@ -3,7 +3,7 @@ import {
   LIMIT,
   useGetEventByIdQuery,
   useGetEventRegistationsQuery,
-  useLazyGetUsersQuery,
+  useLazyGetUsersQuery
 } from "../services/eventsApi";
 import Loader from "../components/Loader";
 import { Search } from "../components/Search";
@@ -34,25 +34,25 @@ function EventPage() {
     {
       data: eventUsers = {
         results: data?.participants,
-        count: data?.participantsCount,
+        count: data?.participantsCount
       },
       isLoading: waitUser,
-      isFetching,
-    },
+      isFetching
+    }
   ] = useLazyGetUsersQuery();
 
   useEffect(() => {
     getUsers({
       eventId: eventId,
       page: +searchParams.get("page"),
-      search: searchParams.get("search"),
+      search: searchParams.get("search")
     });
   }, [eventId, searchParams, getUsers]);
 
   const {
     error: regError,
     data: registrations,
-    isLoading: isLoadReg,
+    isLoading: isLoadReg
   } = useGetEventRegistationsQuery(eventId!);
 
   const date = new Date();
@@ -89,7 +89,7 @@ function EventPage() {
                 <LineChart
                   registrations={{
                     ...registrations,
-                    [`${dateString}`]: 0,
+                    [`${dateString}`]: 0
                   }}
                 />
               )}

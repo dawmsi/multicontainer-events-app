@@ -23,7 +23,7 @@ function createPages(pagesCount: number, currentPage: number) {
 export const ControlPages = ({
   pagesCount,
   updateSearchParams,
-  currentPage = "1",
+  currentPage = "1"
 }) => {
   const page = currentPage ? +currentPage : 1;
 
@@ -42,8 +42,7 @@ export const ControlPages = ({
                 page === currBtn && "bg-base-content text-base-100"
               } p-1 mx-2 transition-all rounded-[4px]`}
               type="button"
-              key={`p${currBtn}`}
-            >
+              key={`p${currBtn}`}>
               {currBtn}
             </button>
           );

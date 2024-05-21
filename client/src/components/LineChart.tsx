@@ -5,7 +5,7 @@ import {
   PointElement,
   LineElement,
   Tooltip,
-  Legend,
+  Legend
 } from "chart.js";
 
 ChartJS.register(
@@ -28,10 +28,10 @@ const LineChart = ({ registrations }) => {
           beginAtZero: true,
           min: 2,
           max: 50,
-          stepSize: 1,
-        },
-      },
-    },
+          stepSize: 1
+        }
+      }
+    }
   };
 
   const data = {
@@ -43,9 +43,9 @@ const LineChart = ({ registrations }) => {
         fill: false,
         backgroundColor: "#b51423",
         borderColor: "#ffc331",
-        lineTension: 0.3,
-      },
-    ],
+        lineTension: 0.3
+      }
+    ]
   };
 
   return (

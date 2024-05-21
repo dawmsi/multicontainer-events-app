@@ -11,8 +11,7 @@ function Event({ id, title, description, organizer, eventDate }: EventItem) {
     <div
       className={`card w-80 bg-base-100 shadow-xl ${
         title.includes("Rust") && "border-2 border-accent"
-      }`}
-    >
+      }`}>
       <article className="card-body">
         <h3 className="card-title">{title}</h3>
         <p>{description}</p>
@@ -30,8 +29,7 @@ function Event({ id, title, description, organizer, eventDate }: EventItem) {
           </Link>
           <Link
             className="btn  btn-neutral dark:btn-accent"
-            to={`/event/${id}`}
-          >
+            to={`/event/${id}`}>
             View
           </Link>
         </div>

@@ -8,7 +8,7 @@ const orederKeys = ["title", "organizer", "eventDate"];
 
 const initialQuery: EventsQuery = {
   page: 1,
-  orderBy: orederKeys[1],
+  orderBy: orederKeys[1]
 };
 
 function HomePage() {
@@ -47,8 +47,7 @@ function HomePage() {
               }`}
               onClick={() => {
                 setQuery((q) => ({ ...q, page: 1, orderBy: orderKey }));
-              }}
-            >
+              }}>
               {orderKey.toUpperCase()}
             </button>
           ))}

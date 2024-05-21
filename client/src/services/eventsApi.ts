@@ -51,9 +51,9 @@ export const eventsApi = createApi({
       query: (id: string) => `registrations/${id}`,
       providesTags: () => [
         {
-          type: "Event",
-        },
-      ],
+          type: "Event"
+        }
+      ]
     }),
     getUsers: builder.query<PageResponse<User>, UserResponse>({
       query: ({ search, page, limit, eventId }) => {
@@ -61,16 +61,16 @@ export const eventsApi = createApi({
           search: search || "",
           page: `${page ?? 1}`,
           limit: `${limit ?? LIMIT}`,
-          eventId: eventId ?? "",
+          eventId: eventId ?? ""
         });
         return `users?${params.toString()}`;
-      },
+      }
     }),
     getEvents: builder.query<EventsState, EventsQuery>({
       query(eventsQuery) {
         const params = new URLSearchParams({
           page: eventsQuery.page.toString(),
-          orderBy: eventsQuery.orderBy.toString(),
+          orderBy: eventsQuery.orderBy.toString()
         });
 
         const query = params.toString();
@@ -81,7 +81,7 @@ export const eventsApi = createApi({
           count: response.count,
           results: response.results,
           lastPage: arg.page,
-          hasMorePages: arg.page < response.count / response.limit,
+          hasMorePages: arg.page < response.count / response.limit
         };
       },
       serializeQueryArgs({ endpointName }) {
@@ -99,31 +99,31 @@ export const eventsApi = createApi({
       },
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
-      },
+      }
     }),
     getEventById: builder.query<EventItem, string>({
       query: (id) => `events/${id}`,
       providesTags: () => [
         {
-          type: "Event",
-        },
-      ],
+          type: "Event"
+        }
+      ]
     }),
     registerToEvent: builder.mutation<EventItem, { id: string; user: User }>({
       query: ({ id, user }) => ({
         url: `events/${id}/register`,
         method: "POST",
-        body: user,
+        body: user
       }),
       invalidatesTags: () => {
         return [
           {
-            type: "Event",
-          },
+            type: "Event"
+          }
         ];
-      },
-    }),
-  }),
+      }
+    })
+  })
 });
 
 export const {
@@ -131,5 +131,5 @@ export const {
   useLazyGetUsersQuery,
   useGetEventsQuery,
   useGetEventByIdQuery,
-  useRegisterToEventMutation,
+  useRegisterToEventMutation
 } = eventsApi;

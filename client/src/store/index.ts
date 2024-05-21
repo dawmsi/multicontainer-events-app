@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 
 export const store = configureStore({
   reducer: {
-    [eventsApi.reducerPath]: eventsApi.reducer,
+    [eventsApi.reducerPath]: eventsApi.reducer
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(eventsApi.middleware),
+    getDefaultMiddleware().concat(eventsApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

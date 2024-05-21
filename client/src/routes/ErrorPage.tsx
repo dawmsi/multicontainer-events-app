@@ -13,8 +13,7 @@ const ErrorPage: React.FC = () => {
   return (
     <div
       className="p-3 flex w-full flex-col text-center min-h-screen gap-2 justify-center items-center"
-      id="error-page"
-    >
+      id="error-page">
       <h1 className="font-bold text-error text-xl">Oops!</h1>
       <p className="text-warning">{error.data}</p>
       <p>

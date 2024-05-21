@@ -6,7 +6,7 @@ import { useEffect } from "react";
 enum HearFrom {
   social = "Social",
   friend = "Friends",
-  found = "Found myself",
+  found = "Found myself"
 }
 
 interface IFormInput {
@@ -22,7 +22,7 @@ const RegisterPage = () => {
 
   const [
     sendCreds, // This is the mutation trigger
-    { error, isSuccess, isError }, // This is the destructured mutation result
+    { error, isSuccess, isError } // This is the destructured mutation result
   ] = useRegisterToEventMutation();
 
   const { register, handleSubmit } = useForm<IFormInput>();
@@ -39,7 +39,7 @@ const RegisterPage = () => {
     console.log(formData);
     return sendCreds({
       id: eventId!,
-      user: formData,
+      user: formData
     });
   };
 
@@ -54,8 +54,7 @@ const RegisterPage = () => {
     <div className="flex flex-col w-full justify-center items-center h-full">
       <form
         className="flex flex-col gap-2 bg-base-100 p-4 md:w-1/2 rounded-2xl"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+        onSubmit={handleSubmit(onSubmit)}>
         <label>Full Name</label>
         <input
           autoFocus
@@ -66,7 +65,7 @@ const RegisterPage = () => {
           {...register("fullName", {
             required: true,
             maxLength: 50,
-            minLength: 2,
+            minLength: 2
           })}
         />
         <input
@@ -77,7 +76,7 @@ const RegisterPage = () => {
           {...register("email", {
             required: true,
             pattern: regEmail,
-            minLength: 5,
+            minLength: 5
           })}
         />
         <input
@@ -87,7 +86,7 @@ const RegisterPage = () => {
           id=""
           {...register("dateOfBirth", {
             required: true,
-            pattern: dateValid,
+            pattern: dateValid
           })}
         />
         <fieldset className="flex justify-between" style={{ float: "left" }}>
