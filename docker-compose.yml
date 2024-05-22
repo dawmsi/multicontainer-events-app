@@ -1,20 +1,9 @@
-version: "3"
 services:
   postgres:
     image: "postgres:latest"
     environment:
       - POSTGRES_PASSWORD=postgres_password
       - POSTGRES_DB=events-app
-  nginx:
-    depends_on:
-      - api
-      - client
-    restart: always
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./nginx
-    ports:
-      - "3050:80"
   client:
     build:
       dockerfile: Dockerfile.dev
@@ -34,3 +23,13 @@ services:
     depends_on:
       - postgres
     command: bash -c "npx prisma migrate dev --name init && npx prisma db seed && npm run dev"
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - "3050:80"

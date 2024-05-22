@@ -15,7 +15,7 @@ app.use(
   })
 );
 
-const updateTime = 60000 / 5;
+const updateTime = 60000 * 2;
 export const autoFetch = setInterval(fetchAnotherApi, updateTime);
 fetchAnotherApi();
 
