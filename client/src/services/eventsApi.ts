@@ -91,7 +91,13 @@ export const eventsApi = createApi({
         if (responseData.lastPage === 1) {
           currentCacheData.results = responseData.results;
         } else {
-          currentCacheData.results.push(...responseData.results);
+          const newResults = responseData.results.filter(
+            (result) =>
+              !currentCacheData.results.some((r) => r.id === result.id)
+          );
+          currentCacheData.results.push(...newResults);
+
+          // currentCacheData.results.push(...responseData.results);
         }
 
         currentCacheData.hasMorePages = responseData.hasMorePages;
