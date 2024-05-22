@@ -1,6 +1,7 @@
 import { LIMIT } from "../config.js";
 import prisma from "../prismaClient.js";
 import { Prisma } from "@prisma/client";
+import { getPaginatedResults, getPagination } from "../utils/pagination.js";
 
 const read = async (req, res) => {
   const { search, page: pageNumber, limit: pageCount, eventId } = req.query;
@@ -8,32 +9,30 @@ const read = async (req, res) => {
   const page = Number(pageNumber) || 1;
   const limit = Number(pageCount) || LIMIT;
 
-  const offset = (page - 1) * limit;
-
-  const searchQuery = search
-    ? [
-        {
-          fullName: {
-            contains: search,
-            mode: Prisma.QueryMode.insensitive,
-          },
-        },
-        {
-          email: {
-            contains: search,
-            mode: Prisma.QueryMode.insensitive,
-          },
-        },
-      ]
-    : undefined;
-
-  const results = await prisma.user.findMany({
-    where: {
-      OR: searchQuery,
-      registrations: {
-        some: { eventId: eventId },
+  const searchQuery = [
+    {
+      fullName: {
+        contains: search,
+        mode: Prisma.QueryMode.insensitive,
       },
     },
+    {
+      email: {
+        contains: search,
+        mode: Prisma.QueryMode.insensitive,
+      },
+    },
+  ];
+
+  const FMOW = {
+    OR: search ? searchQuery : undefined,
+    registrations: {
+      some: { eventId: eventId },
+    },
+  };
+
+  const FMO = {
+    where: FMOW,
     select: {
       id: true,
       fullName: true,
@@ -42,31 +41,19 @@ const read = async (req, res) => {
       dateOfBirth: true,
       hearFrom: true,
     },
-    skip: offset,
-    take: limit,
     orderBy: { number: "desc" },
-  });
+    ...getPagination(page, limit),
+  };
 
-  if (results) {
-    const count = await prisma.user.count({
-      where: {
-        OR: searchQuery,
-        registrations: {
-          some: { eventId: eventId },
-        },
-      },
-    });
+  const [results, count] = await Promise.all([
+    prisma.user.findMany(FMO),
+    prisma.user.count({
+      where: FMOW,
+    }),
+  ]);
 
-    const totalPages = Math.ceil(count / limit);
-
-    const prev = page > 1 ? page - 1 : null;
-    const next = page < totalPages ? page + 1 : null;
-    res.status(200).send({
-      count,
-      prev,
-      next,
-      results,
-    });
+  if (results && count) {
+    res.send(getPaginatedResults(results, count, page, limit));
   }
 };
 

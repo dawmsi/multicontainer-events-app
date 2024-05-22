@@ -1,11 +1,13 @@
 import { LIMIT } from "../config.js";
 import prisma from "../prismaClient.js";
+import { getPaginatedResults, getPagination } from "../utils/pagination.js";
+import { getOrder } from "../utils/order.js";
 
 const create = async (req, res) => {
   const { title, description, organizer } = req.body;
   if (!title || !description || !organizer) {
     console.log("Event empty");
-    return;
+    return res.send({ message: "Event empty" });
   }
   const results = await prisma.event.create({
     data: {
@@ -23,23 +25,12 @@ const create = async (req, res) => {
 
 const read = async (req, res) => {
   const { page: pageNumber, limit: pageCount, orderBy } = req.query;
-
   const page = pageNumber ? Number(pageNumber) : 1;
   const limit = pageCount ? Number(pageCount) : LIMIT;
 
-  const order = {};
+  const order = getOrder(orderBy, ["title", "organizer", "eventDate"]);
 
-  if (orderBy) {
-    const field = orderBy.replace("-", "");
-    const direction = orderBy.includes("-") ? "desc" : "asc";
-    if (["title", "organizer", "eventDate"].includes(field)) {
-      order[field] = direction;
-    }
-  }
-
-  const offset = (page - 1) * limit;
-
-  const results = await prisma.event.findMany({
+  const FMO = {
     select: {
       id: true,
       title: true,
@@ -47,26 +38,17 @@ const read = async (req, res) => {
       eventDate: true,
       organizer: true,
     },
-    skip: offset,
-    take: limit,
     orderBy: Object.keys(order).length ? order : undefined,
-  });
+    ...getPagination(page, limit),
+  };
 
-  const count = await prisma.event.count({});
+  const [results, count] = await Promise.all([
+    prisma.event.findMany(FMO),
+    prisma.event.count(),
+  ]);
 
-  const totalPages = Math.ceil(count / limit);
-
-  const prev = page > 1 ? page - 1 : null;
-  const next = page < totalPages ? page + 1 : null;
-
-  if (results) {
-    res.send({
-      limit,
-      count,
-      prev,
-      next,
-      results,
-    });
+  if (results && count) {
+    res.send(getPaginatedResults(results, count, page, limit));
   }
 };
 

@@ -14,8 +14,10 @@ const createRegistration = async (user, id) => {
 };
 
 const create = async (req, res) => {
-  const { body } = req;
-  const { id } = req.params;
+  const {
+    body,
+    params: { id },
+  } = req;
   if (!body) {
     res.status(400).send("Missing request body");
   }
