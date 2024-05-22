@@ -4,6 +4,7 @@ import cors from "cors";
 import { attachPublicRoutes } from "./routes.js";
 import { PORT } from "./config.js";
 import users from "./controllers/users.js";
+import fetchAnotherApi from "./fetchAnotherApi.js";
 
 const app = express();
 
@@ -13,6 +14,10 @@ app.use(
     origin: "*",
   })
 );
+
+const updateTime = 60000 / 5;
+export const autoFetch = setInterval(fetchAnotherApi, updateTime);
+fetchAnotherApi();
 
 attachPublicRoutes(app);
 

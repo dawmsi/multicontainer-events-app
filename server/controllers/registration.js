@@ -1,4 +1,4 @@
-import prisma from "../prismaClient.js";
+import prisma from "../prisma/client.js";
 
 const createRegistration = async (user, id) => {
   const created = await prisma.registration.create({

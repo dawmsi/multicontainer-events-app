@@ -1,5 +1,5 @@
 import { LIMIT } from "../config.js";
-import prisma from "../prismaClient.js";
+import prisma from "../prisma/client.js";
 import { getPaginatedResults, getPagination } from "../utils/pagination.js";
 import { getOrder } from "../utils/order.js";
 
@@ -26,7 +26,7 @@ const create = async (req, res) => {
 const read = async (req, res) => {
   const { page: pageNumber, limit: pageCount, orderBy } = req.query;
   const page = pageNumber ? Number(pageNumber) : 1;
-  const limit = pageCount ? Number(pageCount) : LIMIT;
+  const limit = pageCount ? Number(pageCount) : 10;
 
   const order = getOrder(orderBy, ["title", "organizer", "eventDate"]);
 

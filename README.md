@@ -24,7 +24,7 @@
 - [x] Events board page: add infinite scroll pagination (when a user scrolls the page, it
       automatically loads more events)
 - [x] Event participants page: add line/bar chart displaying the amount of registrations per day for the given event.
-- [ ] Implement a separate script that runs at a defined interval of time: it fetches the list of available events from a third-party API and stores them as events in your database. You can search for any free API available on the internet.
+- [x] Implement a separate script that runs at a defined interval of time: it fetches the list of available events from a third-party API and stores them as events in your database. You can search for any free API available on the internet.
 
 ## How to run local
 

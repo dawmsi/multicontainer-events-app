@@ -1,5 +1,5 @@
 import { LIMIT } from "../config.js";
-import prisma from "../prismaClient.js";
+import prisma from "../prisma/client.js";
 import { Prisma } from "@prisma/client";
 import { getPaginatedResults, getPagination } from "../utils/pagination.js";
 
